@@ -6,21 +6,21 @@ import facefusion.choices
 from facefusion.typing import VideoMemoryStrategy
 from facefusion import wording
 
-VIDEO_MEMORY_STRATEGY : Optional[gradio.Dropdown] = None
+VIDEO_MEMORY_STRATEGY_DROPDOWN : Optional[gradio.Dropdown] = None
 SYSTEM_MEMORY_LIMIT_SLIDER : Optional[gradio.Slider] = None
 
 
 def render() -> None:
-	global VIDEO_MEMORY_STRATEGY
+	global VIDEO_MEMORY_STRATEGY_DROPDOWN
 	global SYSTEM_MEMORY_LIMIT_SLIDER
 
-	VIDEO_MEMORY_STRATEGY = gradio.Dropdown(
-		label = wording.get('video_memory_strategy_dropdown_label'),
+	VIDEO_MEMORY_STRATEGY_DROPDOWN = gradio.Dropdown(
+		label = wording.get('uis.video_memory_strategy_dropdown'),
 		choices = facefusion.choices.video_memory_strategies,
 		value = facefusion.globals.video_memory_strategy
 	)
 	SYSTEM_MEMORY_LIMIT_SLIDER = gradio.Slider(
-		label = wording.get('system_memory_limit_slider_label'),
+		label = wording.get('uis.system_memory_limit_slider'),
 		step =facefusion.choices.system_memory_limit_range[1] - facefusion.choices.system_memory_limit_range[0],
 		minimum = facefusion.choices.system_memory_limit_range[0],
 		maximum = facefusion.choices.system_memory_limit_range[-1],
@@ -29,8 +29,8 @@ def render() -> None:
 
 
 def listen() -> None:
-	VIDEO_MEMORY_STRATEGY.change(update_video_memory_strategy, inputs = VIDEO_MEMORY_STRATEGY)
-	SYSTEM_MEMORY_LIMIT_SLIDER.change(update_system_memory_limit, inputs = SYSTEM_MEMORY_LIMIT_SLIDER)
+	VIDEO_MEMORY_STRATEGY_DROPDOWN.change(update_video_memory_strategy, inputs = VIDEO_MEMORY_STRATEGY_DROPDOWN)
+	SYSTEM_MEMORY_LIMIT_SLIDER.release(update_system_memory_limit, inputs = SYSTEM_MEMORY_LIMIT_SLIDER)
 
 
 def update_video_memory_strategy(video_memory_strategy : VideoMemoryStrategy) -> None:
